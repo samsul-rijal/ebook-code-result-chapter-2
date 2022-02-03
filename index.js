@@ -14,8 +14,12 @@ app.get('/home', function (req, res) {
     res.render('index')
 })
 
+const isLogin = false
+
 app.get('/blog', function (req, res) {
-    res.render('blog')
+    res.render('blog', {
+        isLogin: isLogin
+    })
 })
 
 app.get('/blog/:id', function (req, res) {
