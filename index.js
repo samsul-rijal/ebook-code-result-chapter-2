@@ -14,6 +14,14 @@ app.get('/home', function (req, res) {
     res.render('index')
 })
 
+app.get('/blog', function (req, res) {
+    res.render('blog')
+})
+
+app.get('/contact-me', function (req, res) {
+    res.render('contact')
+})
+
 const port = 5000
 app.listen(port, function () {
     console.debug(`Server running on port ${port}`)
