@@ -4,6 +4,8 @@ const app = express()
 
 app.set('view engine', 'hbs');
 
+app.use('/public', express.static(__dirname + '/public'));
+
 app.get('/', function (req, res) {
     res.send("Hello World")
 })
