@@ -45,10 +45,12 @@
         <img src="/public/assets/blog-img.png" alt="Pasar Coding di Indonesia Dinilai Masih Menjanjikan" />
       </div>
       <div class="blog-content">
+        {{#if isLogin}}
         <div class="button-group">
           <a class="btn-edit">Edit Post</button>
             <a class="btn-post">Delete Blog</a>
         </div>
+        {{/if}}
         <h1>
           <a href="/blog/1" target="_blank">
             Pasar Coding di Indonesia Dinilai Masih Menjanjikan
