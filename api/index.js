@@ -7,6 +7,7 @@ app.set('view engine', 'hbs');
 app.set("views", path.join(__dirname, "../views"));
 
 app.use("/public", express.static(path.join(__dirname, "../public")));
+app.use(express.urlencoded({ extended: false }))
 
 app.get('/', function (req, res) {
     res.send("Hello World")
@@ -47,6 +48,13 @@ app.get('/blog/:id', function (req, res) {
                   numquam! Deleniti maiores expedita eaque deserunt quaerat! Dicta,
                   eligendi debitis?`
         }
+    })
+})
+
+app.post('/blog', (req, res) => {
+    console.log({
+        title: req.body.title,
+        content: req.body.content
     })
 })
 
