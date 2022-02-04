@@ -7,8 +7,6 @@ app.set('view engine', 'hbs');
 app.use('/public', express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
-    res.setHeader("Content-Type", "text/html");
-    res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
     res.send('index')
 })
 
