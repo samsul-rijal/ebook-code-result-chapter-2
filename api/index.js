@@ -52,6 +52,11 @@ app.get('/blog/:id', function (req, res) {
     })
 })
 
+app.get('/add-blog', function (req, res) {
+    setHeader(res)
+    res.render("form-blog")
+})
+
 app.post('/blog', (req, res) => {
     console.log({
         title: req.body.title,
