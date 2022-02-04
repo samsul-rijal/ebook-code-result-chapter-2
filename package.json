@@ -18,6 +18,7 @@
   "homepage": "https://github.com/demo-dumbways/ebook-code-result-chapter-2#readme",
   "dependencies": {
     "express": "^4.17.2",
-    "hbs": "^4.2.0"
+    "hbs": "^4.2.0",
+    "pg": "^8.7.1"
   }
 }
