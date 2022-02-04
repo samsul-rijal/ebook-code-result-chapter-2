@@ -1,16 +1,23 @@
-const express = require('express');
+const express = require('express')
 
-const app = express();
+const app = express()
+
+app.set('view engine', 'hbs');
 
 app.get('/', function (req, res) {
     setHeader(res)
-    res.send('Hello World');
-});
+    res.send("Hello World")
+})
 
-const port = 5000;
+app.get('/home', function (req, res) {
+    setHeader(res)
+    res.render('index')
+})
+
+const port = 5000
 app.listen(port, function () {
-    console.debug(`Server running on port ${port}`);
-});
+    console.debug(`Server running on port ${port}`)
+})
 
 function setHeader(res) {
     res.setHeader("Content-Type", "text/html");
