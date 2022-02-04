@@ -5,12 +5,12 @@ const app = express()
 app.set('view engine', 'hbs');
 
 app.get('/', function (req, res) {
-    getHeader(res)
+    setHeader(res)
     res.send("Hello World")
 })
 
 app.get('/home', function (req, res) {
-    getHeader(res)
+    setHeader(res)
     res.render('index')
 })
 
@@ -19,7 +19,7 @@ app.listen(port, function () {
     console.debug(`Server running on port ${port}`)
 })
 
-function getHeader(res) {
+function setHeader(res) {
     res.setHeader("Content-Type", "text/html");
     res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
 }
