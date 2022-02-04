@@ -17,7 +17,7 @@ app.get('/home', function (req, res) {
     res.render('index')
 })
 
-const isLogin = false
+const isLogin = true
 
 app.get('/blog', function (req, res) {
     setHeader(res)
