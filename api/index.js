@@ -11,9 +11,7 @@ app.get('/', function (req, res) {
 })
 
 app.get('/home', function (req, res) {
-    // setHeader(res)
-    res.setHeader("Content-Type", "text/html");
-    res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+    setHeader(res)
     res.render('index')
 })
 
@@ -24,7 +22,7 @@ app.listen(PORT, function () {
     console.debug(`Server running on PORT ${PORT}`)
 })
 
-// function setHeader(res) {
-//     res.setHeader("Content-Type", "text/html");
-//     res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
-// }
+function setHeader(res) {
+    res.setHeader("Content-Type", "text/html");
+    res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+}
