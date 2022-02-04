@@ -5,7 +5,6 @@ const app = express()
 app.set('view engine', 'hbs');
 
 app.get('/', function (req, res) {
-    setHeader(res)
     res.send("Hello World")
 })
 
