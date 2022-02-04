@@ -57,7 +57,7 @@ app.get('/add-blog', function (req, res) {
     res.render("form-blog")
 })
 
-app.post('/blog', (req, res) => {
+app.post('/blog', function (req, res) {
     const blog = {
         title: req.body.title,
         post_date: '12 Jul 2021 22:30 WIB',
@@ -69,6 +69,15 @@ app.post('/blog', (req, res) => {
 
     res.redirect('/blog');
 })
+
+app.get('/delete-blog/:index', (req, res) => {
+    const index = req.params.index;
+
+    blogs.splice(index, 1);
+
+    setHeader(res)
+    res.redirect('/blog');
+});
 
 app.get('/contact-me', function (req, res) {
     setHeader(res)
