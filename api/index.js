@@ -10,6 +10,22 @@ app.use("/public", express.static(path.join(__dirname, "../public")));
 
 app.use(express.urlencoded({ extended: false }))
 
+const blogs = [
+    {
+        id: 1,
+        title: 'Pasar Coding di Indonesia Dinilai Masih Menjanjikan',
+        post_date: '12 Jul 2021 22:30 WIB',
+        author: 'Ichsan Emrald Alamsyah',
+        content: `Ketimpangan sumber daya manusia (SDM) di sektor digital masih
+                    menjadi isu yang belum terpecahkan. Berdasarkan penelitian
+                    ManpowerGroup, ketimpangan SDM global, termasuk Indonesia,
+                    meningkat dua kali lipat dalam satu dekade terakhir. Lorem ipsum,
+                    dolor sit amet consectetur adipisicing elit. Quam, molestiae
+                    numquam! Deleniti maiores expedita eaque deserunt quaerat! Dicta,
+                    eligendi debitis?`,
+    },
+];
+
 app.get('/', function (req, res) {
     res.send("Hello World")
 })
@@ -24,32 +40,16 @@ const isLogin = true
 app.get('/blog', function (req, res) {
     setHeader(res)
     res.render('blog', {
-        isLogin: isLogin
+        isLogin: isLogin,
+        blogs: blogs
     })
 })
 
 app.get('/blog/:id', function (req, res) {
-    // get selected blog id with params
     const blogId = req.params.id
-
+    const blog = blogs.find((item) => item.id == blogId);
     setHeader(res)
-
-    // render blog-detail page and send data to view
-    res.render('blog-detail', {
-        blog: {
-            id: blogId,
-            title: 'Pasar Coding di Indonesia Dinilai Masih Menjanjikan',
-            post_date: '12 Jul 2021 22:30 WIB',
-            author: 'Ichsan Emrald Alamsyah',
-            content: `Ketimpangan sumber daya manusia (SDM) di sektor digital masih
-                  menjadi isu yang belum terpecahkan. Berdasarkan penelitian
-                  ManpowerGroup, ketimpangan SDM global, termasuk Indonesia,
-                  meningkat dua kali lipat dalam satu dekade terakhir. Lorem ipsum,
-                  dolor sit amet consectetur adipisicing elit. Quam, molestiae
-                  numquam! Deleniti maiores expedita eaque deserunt quaerat! Dicta,
-                  eligendi debitis?`
-        }
-    })
+    res.render('blog-detail', { blog });
 })
 
 app.get('/add-blog', function (req, res) {
