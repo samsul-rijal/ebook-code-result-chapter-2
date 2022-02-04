@@ -17,7 +17,9 @@ app.get('/home', function (req, res) {
     res.render('index')
 })
 
-const port = 5000
+// const port = 5000
+const PORT = process.env.PORT || 3000;
+
 app.listen(port, function () {
     console.debug(`Server running on port ${port}`)
 })
