@@ -58,10 +58,7 @@ app.get('/add-blog', function (req, res) {
 })
 
 app.post('/blog', (req, res) => {
-    console.log({
-        title: req.body.title,
-        content: req.body.content
-    })
+    res.send(`<script>title : ${title}, content : ${content}</script>`)
 })
 
 app.get('/contact-me', function (req, res) {
