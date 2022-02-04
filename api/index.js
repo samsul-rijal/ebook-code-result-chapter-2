@@ -58,7 +58,16 @@ app.get('/add-blog', function (req, res) {
 })
 
 app.post('/blog', (req, res) => {
-    res.send(`<script>alert('title : ${req.body.title}, content : ${req.body.content}')</script>`)
+    const blog = {
+        title: req.body.title,
+        post_date: '12 Jul 2021 22:30 WIB',
+        author: 'Ichsan Emrald Alamsyah',
+        content: req.body.content,
+    };
+
+    blogs.push(blog);
+
+    res.redirect('/blog');
 })
 
 app.get('/contact-me', function (req, res) {
