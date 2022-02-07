@@ -1,6 +1,8 @@
 const express = require('express')
 const path = require("path");
 
+const db = require('../connection/db');
+
 const app = express()
 
 app.set('view engine', 'hbs');
@@ -39,9 +41,31 @@ const isLogin = true
 
 app.get('/blog', function (req, res) {
     setHeader(res)
-    res.render('blog', {
-        isLogin: isLogin,
-        blogs: blogs
+    db.connect((err, client, done) => {
+        if (err) throw err
+
+        client.query('SELECT * FROM tb_blog', (err, result) => {
+            done()
+            if (err) throw
+
+            let data = result.rows
+
+            data = data.map((blog) => {
+                return {
+                    ...blog,
+                    post_at: getFullTime(blog.post_at),
+                    post_age: getDistanceTime(blog.post_at),
+                    isLogin: isLogin
+                }
+            })
+
+            res.render(
+                'blog',
+                {
+                    isLogin: isLogin,
+                    blogs: data
+                })
+        })
     })
 })
 
