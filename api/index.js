@@ -158,6 +158,11 @@ app.get('/contact-me', function (req, res) {
     res.render('contact')
 })
 
+app.get('/register', function (req, res) {
+    setHeader(res)
+    res.render('register')
+})
+
 const port = 5000
 app.listen(port, function () {
     console.debug(`Server running on port ${port}`)
