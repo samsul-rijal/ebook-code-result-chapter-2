@@ -121,6 +121,38 @@ app.get('/delete-blog/:id', function (req, res) {
     })
 })
 
+app.get('/update-blog/:id', function (req, res) {
+    let id = req.params.id
+    let query = `UPDATE FROM blog WHERE id = ${id}`
+
+    setHeader(res)
+    db.connect(function (err, client, done) {
+        done()
+        if (err) throw err
+        client.query(query, function (err, result) {
+            if (err) throw err
+            res.redirect('/blog')
+        })
+    })
+})
+
+app.post('/update-blog/:id', function (req, res) {
+    let id = req.params.id
+    let data = req.body
+
+    let query = `UPDATE blog SET title='${data.title}', content='${data.content}' WHERE id='${id}'`
+
+    db.connect(function (err, client, done) {
+        if (err) throw err
+
+        client.query(query, function (err, result) {
+            done()
+            if (err) throw err
+            res.redirect('/blog')
+        })
+    })
+})
+
 app.get('/contact-me', function (req, res) {
     setHeader(res)
     res.render('contact')
