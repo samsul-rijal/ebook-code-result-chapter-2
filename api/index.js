@@ -106,14 +106,20 @@ app.post('/blog', function (req, res) {
     })
 })
 
-app.get('/delete-blog/:index', (req, res) => {
-    const index = req.params.index;
-
-    blogs.splice(index, 1);
+app.get('/delete-blog/:id', function (req, res) {
+    let id = req.params.id
+    let query = `DELETE FROM blog WHERE id = ${id}`
 
     setHeader(res)
-    res.redirect('/blog');
-});
+    db.connect(function (err, client, done) {
+        done()
+        if (err) throw err
+        client.query(query, function (err, result) {
+            if (err) throw err
+            res.redirect('/blog')
+        })
+    })
+})
 
 app.get('/contact-me', function (req, res) {
     setHeader(res)
