@@ -1,8 +1,8 @@
 const express = require('express')
 const path = require("path");
+const bcrypt = require('bcrypt');
 
 const db = require(path.join(__dirname, '../connection/db'));
-const bcrypt = require(path.join(__dirname, 'bcrypt'));
 
 const app = express()
 
