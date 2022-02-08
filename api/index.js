@@ -72,9 +72,18 @@ app.get('/blog', function (req, res) {
 
 app.get('/blog/:id', function (req, res) {
     const blogId = req.params.id
-    const blog = blogs.find((item) => item.id == blogId);
+
     setHeader(res)
-    res.render('blog-detail', { blog });
+    db.connect((err, client, done) => {
+        if (err) throw err
+
+        client.query(`SELECT * FROM blog WHERE id = ${id}`, function (err, result) {
+            done()
+            if (err) throw err
+
+            res.render('blog-detail', { isLogin: isLogin, blog: result.rows[0] })
+        })
+    })
 })
 
 app.get('/add-blog', function (req, res) {
