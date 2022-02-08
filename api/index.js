@@ -96,6 +96,11 @@ app.get('/add-blog', function (req, res) {
 app.post('/blog', function (req, res) {
     let data = req.body
 
+    if (!req.session.isLogin) {
+        req.flash('danger', 'Please login')
+        return res.redirect('/add-blog')
+    }
+
     let query = `INSERT INTO blog(title, content, image) VALUES ('${data.title}', '${data.content}', 'image.png')`
 
     db.connect(function (err, client, done) {
