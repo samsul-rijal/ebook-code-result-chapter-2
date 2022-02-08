@@ -181,6 +181,11 @@ app.post('/register', function (req, res) {
     })
 })
 
+app.get('/login', function (req, res) {
+    setHeader(res)
+    res.render('login')
+})
+
 const port = 5000
 app.listen(port, function () {
     console.debug(`Server running on port ${port}`)
