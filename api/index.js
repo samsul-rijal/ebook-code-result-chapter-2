@@ -37,10 +37,8 @@ app.get('/', function (req, res) {
 
 app.get('/home', function (req, res) {
     setHeader(res)
-    res.render('index')
+    res.render('index', { isLogin: isLogin, user: req.session.user })
 })
-
-const isLogin = true
 
 app.get('/blog', function (req, res) {
     setHeader(res)
@@ -134,7 +132,7 @@ app.get('/update-blog/:id', function (req, res) {
         if (err) throw err
         client.query(query, function (err, result) {
             if (err) throw err
-            res.redirect('/blog')
+            res.render('update-blog', { isLogin: isLogin, blog: result.rows[0] })
         })
     })
 })
