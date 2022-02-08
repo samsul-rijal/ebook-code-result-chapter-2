@@ -76,6 +76,7 @@ app.get('/delete-blog/:index', function (req, res) {
     blogs.splice(index, 1);
 
     setHeader(res)
+
     res.redirect('/blog');
 });
 
