@@ -43,10 +43,14 @@ app.get('/home', function (req, res) {
 app.get('/blog', function (req, res) {
     setHeader(res)
 
+    let query = `SELECT blog.id, blog.title, blog.content, blog.image, tb_user.name AS author, blog.author_id, blog.post_at
+                    FROM blog LEFT JOIN tb_user
+                    ON blog.author_id = tb_user.id`
+
     db.connect((err, client, done) => {
         if (err) throw err
 
-        client.query('SELECT * FROM tb_blog', (err, result) => {
+        client.query(query, (err, result) => {
             done()
             if (err) throw
 
