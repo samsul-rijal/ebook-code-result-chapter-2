@@ -35,6 +35,8 @@ app.get('/', function (req, res) {
     res.send("Hello World")
 })
 
+const isLogin = true
+
 app.get('/home', function (req, res) {
     setHeader(res)
     res.render('index', { isLogin: isLogin, user: req.session.user })
