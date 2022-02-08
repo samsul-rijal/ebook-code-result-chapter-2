@@ -37,7 +37,7 @@ app.get('/', function (req, res) {
 
 app.get('/home', function (req, res) {
     setHeader(res)
-    res.render('index', { isLogin: isLogin, user: req.session.user })
+    res.render('index', { isLogin: req.session.isLogin, user: req.session.user })
 })
 
 app.get('/blog', function (req, res) {
@@ -57,14 +57,14 @@ app.get('/blog', function (req, res) {
                     ...blog,
                     post_at: getFullTime(blog.post_at),
                     post_age: getDistanceTime(blog.post_at),
-                    isLogin: isLogin
+                    isLogin: req.session.isLogin
                 }
             })
 
             res.render(
                 'blog',
                 {
-                    isLogin: isLogin,
+                    isLogin: req.session.isLogin,
                     blogs: data
                 })
         })
@@ -82,7 +82,7 @@ app.get('/blog/:id', function (req, res) {
             done()
             if (err) throw err
 
-            res.render('blog-detail', { isLogin: isLogin, blog: result.rows[0] })
+            res.render('blog-detail', { isLogin: req.session.isLogin, blog: result.rows[0] })
         })
     })
 })
@@ -132,7 +132,7 @@ app.get('/update-blog/:id', function (req, res) {
         if (err) throw err
         client.query(query, function (err, result) {
             if (err) throw err
-            res.render('update-blog', { isLogin: isLogin, blog: result.rows[0] })
+            res.render('update-blog', { isLogin: req.session.isLogin, blog: result.rows[0] })
         })
     })
 })
