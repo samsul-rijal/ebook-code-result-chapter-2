@@ -69,8 +69,8 @@ app.get('/blog', function (req, res) {
                 'blog',
                 {
                     isLogin: req.session.isLogin,
-                    blogs: data,
-                    user: req.session.user
+                    user: req.session.user,
+                    blogs: data
                 })
         })
     })
