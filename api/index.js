@@ -70,7 +70,7 @@ app.post('/blog', function (req, res) {
     res.redirect('/blog');
 })
 
-app.get('/delete-blog/:index', (req, res) => {
+app.get('/delete-blog/:index', function (req, res) {
     const index = req.params.index;
 
     blogs.splice(index, 1);
