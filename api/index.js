@@ -92,16 +92,18 @@ app.get('/add-blog', function (req, res) {
 })
 
 app.post('/blog', function (req, res) {
-    const blog = {
-        title: req.body.title,
-        post_date: '12 Jul 2021 22:30 WIB',
-        author: 'Ichsan Emrald Alamsyah',
-        content: req.body.content,
-    };
+    let data = req.body
 
-    blogs.push(blog);
+    let query = `INSERT INTO blog(title, content, image) VALUES ('${data.title}', '${data.content}', 'image.png')`
 
-    res.redirect('/blog');
+    db.connect(function (err, client, done) {
+        if (err) throw err
+
+        client.query(query, function (err, result) {
+            if (err) throw err
+            res.redirect('/blog')
+        })
+    })
 })
 
 app.get('/delete-blog/:index', (req, res) => {
