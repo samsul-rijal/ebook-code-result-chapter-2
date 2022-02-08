@@ -5,6 +5,7 @@ const flash = require('express-flash')
 const session = require('express-session')
 
 const db = require(path.join(__dirname, '../connection/db'));
+const upload = require(path.join(__dirname, './middlewares/uploadFile'))
 
 const app = express()
 
@@ -97,10 +98,18 @@ app.get('/add-blog', function (req, res) {
     res.render("form-blog")
 })
 
-app.post('/blog', function (req, res) {
+app.post('/blog', upload.single('image'), function (req, res) {
     let data = req.body
 
-    let query = `INSERT INTO blog(title, content, image) VALUES ('${data.title}', '${data.content}', 'image.png')`
+    if (!req.session.isLogin) {
+        req.flash('danger', 'Please login')
+        return res.redirect('/add-blog')
+    }
+
+    let authorId = req.session.user.id
+    let image = req.file ? req.file.filename : null
+
+    let query = `INSERT INTO blog(title, content, image, author_id) VALUES ('${data.title}', '${data.content}', '${image}', '${authorId}')`
 
     db.connect(function (err, client, done) {
         if (err) throw err
