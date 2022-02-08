@@ -58,7 +58,6 @@ app.get('/blog', function (req, res) {
                     post_at: getFullTime(blog.post_at),
                     post_age: getDistanceTime(blog.post_at),
                     isLogin: req.session.isLogin,
-                    user: req.session.user
                 }
             })
 
@@ -66,7 +65,8 @@ app.get('/blog', function (req, res) {
                 'blog',
                 {
                     isLogin: req.session.isLogin,
-                    blogs: data
+                    blogs: data,
+                    user: req.session.user
                 })
         })
     })
