@@ -1,10 +1,13 @@
 const express = require('express')
 const path = require("path");
+const bcrypt = require('bcrypt');
+const flash = require('express-flash')
 
 const db = require(path.join(__dirname, '../connection/db'));
-const bcrypt = require(path.join(__dirname, 'bcrypt'));
 
 const app = express()
+
+app.use(flash())
 
 app.set('view engine', 'hbs');
 app.set("views", path.join(__dirname, "../views"));
@@ -184,6 +187,25 @@ app.post('/register', function (req, res) {
 app.get('/login', function (req, res) {
     setHeader(res)
     res.render('login')
+})
+
+app.post('/login', function (req, res) {
+    const { email, password } = req.body
+
+    let query = `SELECT * FROM tb_user WHERE email = '${email}'`
+
+    db.connect(function (err, client, done) {
+        if (err) throw err
+
+        client.query(query, function (err, result) {
+            if (err) throw err
+
+            if (result.rows.length == 0) {
+                req.flash('danger', "Email & Password don't match!")
+                return res.redirect('/login')
+            }
+        })
+    })
 })
 
 const port = 5000
