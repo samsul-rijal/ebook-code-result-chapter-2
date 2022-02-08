@@ -2,6 +2,7 @@ const express = require('express')
 const path = require("path");
 const bcrypt = require('bcrypt');
 const flash = require('express-flash')
+const session = require('express-session')
 
 const db = require(path.join(__dirname, '../connection/db'));
 
@@ -9,28 +10,26 @@ const app = express()
 
 app.use(flash())
 
+app.use(
+    session({
+        cookie: {
+            maxAge: 2 * 60 * 60 * 1000,
+            secure: false,
+            httpOnly: true,
+        },
+        store: new session.MemoryStore(),
+        saveUninitialized: true,
+        resave: false,
+        secret: "secretValue",
+    })
+)
+
 app.set('view engine', 'hbs');
 app.set("views", path.join(__dirname, "../views"));
 
 app.use("/public", express.static(path.join(__dirname, "../public")));
 
 app.use(express.urlencoded({ extended: false }))
-
-const blogs = [
-    {
-        id: 1,
-        title: 'Pasar Coding di Indonesia Dinilai Masih Menjanjikan',
-        post_date: '12 Jul 2021 22:30 WIB',
-        author: 'Ichsan Emrald Alamsyah',
-        content: `Ketimpangan sumber daya manusia (SDM) di sektor digital masih
-                    menjadi isu yang belum terpecahkan. Berdasarkan penelitian
-                    ManpowerGroup, ketimpangan SDM global, termasuk Indonesia,
-                    meningkat dua kali lipat dalam satu dekade terakhir. Lorem ipsum,
-                    dolor sit amet consectetur adipisicing elit. Quam, molestiae
-                    numquam! Deleniti maiores expedita eaque deserunt quaerat! Dicta,
-                    eligendi debitis?`,
-    },
-];
 
 app.get('/', function (req, res) {
     res.send("Hello World")
@@ -203,6 +202,23 @@ app.post('/login', function (req, res) {
             if (result.rows.length == 0) {
                 req.flash('danger', "Email & Password don't match!")
                 return res.redirect('/login')
+            }
+
+            let isMatch = bcrypt.compareSync(password, result.rows[0].password)
+
+            if (isMatch) {
+                req.session.isLogin = true
+                req.session.user = {
+                    id: result.rows[0].id,
+                    name: result.rows[0].name,
+                    email: result.rows[0].email
+                }
+
+                req.flash('success', "Login success")
+                res.redirect('/blog')
+            } else {
+                req.flash('danger', "Email & Password don't match!")
+                res.redirect('/login')
             }
         })
     })
