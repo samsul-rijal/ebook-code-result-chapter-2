@@ -41,6 +41,7 @@ const isLogin = true
 
 app.get('/blog', function (req, res) {
     setHeader(res)
+
     db.connect((err, client, done) => {
         if (err) throw err
 
