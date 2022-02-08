@@ -132,7 +132,7 @@ app.get('/update-blog/:id', function (req, res) {
         if (err) throw err
         client.query(query, function (err, result) {
             if (err) throw err
-            res.redirect('/blog')
+            res.render('update-blog', { isLogin: isLogin, blog: result.rows[0] })
         })
     })
 })
