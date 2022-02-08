@@ -2,6 +2,7 @@ const express = require('express')
 const path = require("path");
 
 const db = require(path.join(__dirname, '../connection/db'));
+const bcrypt = require(path.join(__dirname, 'bcrypt'));
 
 const app = express()
 
@@ -161,6 +162,23 @@ app.get('/contact-me', function (req, res) {
 app.get('/register', function (req, res) {
     setHeader(res)
     res.render('register')
+})
+
+app.post('/register', function (req, res) {
+    const { email, name, password } = req.body
+
+    const hashedPassword = bcrypt.hashSync(password, 10)
+
+    let query = `INSERT INTO tb_user(name, email, password) VALUES('${name}', '${email}', '${hashedPassword}')`
+
+    db.connect(function (err, client, done) {
+        if (err) throw err
+
+        client.query(query, function (err, result) {
+            if (err) throw err
+            res.redirect('/login')
+        })
+    })
 })
 
 const port = 5000
